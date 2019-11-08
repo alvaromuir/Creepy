@@ -5,21 +5,20 @@ Creepy is a mult-threaded webpage scanner that searches for OneTrust and GTM tag
 
 
 #### Usage:
-Compiled with maven. Run `$mvn clean package`
-
-Then can be run as:  
-a single url  with the `-u` or `--url` flag
-`$ java -jar creepy-1.0-SNAPSHOT-standalone.jar -u http://us.coke-cola.com/`
-
-a list of comma-separated urls with the `-l` or `--list` flag
-`$ java -jar creepy-1.0-SNAPSHOT-standalone.jar -l "https://us.coca-cola.com, https://www.sprite.com, https://www.minutemaid.com/"`
-
-a file  of comma-separated urls with the `-f` or `--file` flag  
-
-`$java -jar creepy-1.0-SNAPSHOT-standalone.jar -f <path/to/my/file>`
+Compiled with maven. Run `$mvn clean package`, then execute as:  
 
 
-see help `-?` or `--help` and other options below
+
+a single url  with the `-u` or `--url` flag:  
+`$ java -jar creepy-1.0-SNAPSHOT-standalone.jar -u http://us.coke-cola.com/`  
+
+a list of comma-separated urls with the `-l` or `--list` flag:  
+`$ java -jar creepy-1.0-SNAPSHOT-standalone.jar -l "https://us.coca-cola.com, https://www.sprite.com, https://www.minutemaid.com/"`  
+
+a file  of comma-separated urls with the `-f` or `--file` flag:  
+`$java -jar creepy-1.0-SNAPSHOT-standalone.jar -f <path/to/my/file>`  
+
+see help `-?` or `--help` and other options below 
 
 ``` 
 creepy parses a url for KO MDS Global required tags.
