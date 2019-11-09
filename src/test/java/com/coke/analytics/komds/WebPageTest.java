@@ -92,7 +92,7 @@ class WebPageTest {
 
     @Test
     void getInlineScriptsParentElementTest() {
-        String scriptFilter = "gtm";
+        String scriptFilter = "GTM-";
 
         String inlineScriptParent = webPage.getInlineScriptsParentElement(scriptFilter);
         assertThat(inlineScriptParent, is("head"));
