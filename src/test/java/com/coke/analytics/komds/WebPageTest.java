@@ -61,18 +61,24 @@ class WebPageTest {
         String firstScript = "https://s3.amazonaws.com/brandscom/sso/prod/post-robot.js";
 
         List<String> scripts = webPage.getRemoteScripts();
+
         assertThat(scripts.contains(firstScript), is(true));
     }
 
     @Test
     void getInlineScriptsTest() {
-        String firstScript = "gtm";
+        String firstScript = "GTM-";
+        String expectedResult = "(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start': \n" +
+                "new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], \n" +
+                "j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src= \n" +
+                "'//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f); \n" +
+                "})(window,document,'script','dataLayer','GTM-KL6MCF');";
 
         List<String> scripts = webPage.getInlineScripts().stream()
                 .filter(l -> l.contains(firstScript))
                 .collect(Collectors.toList());
 
-        assertThat(scripts.size(), is(1));
+        assertThat(scripts.get(0), is(expectedResult));
     }
 
     @Test
