@@ -40,7 +40,7 @@ class Crawler {
         }
 
         if(statusCode.startsWith("3")) {
-            WebPage redirectPage = new WebPageBuilder().setUrl(url).setFollowRedirects(true).build();
+            WebPage redirectPage = new WebPageBuilder().setUrl(url).setFollowRedirects().build();
 
             parseScripts(redirectPage, oneTrustScript, oneTrustScriptPlacement, oneTrustHostingPlatform, gtmID, gtmIDPlacement);
 
