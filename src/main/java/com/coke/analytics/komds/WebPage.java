@@ -5,9 +5,6 @@ import org.jsoup.HttpStatusException;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
-
-
 
 import javax.net.ssl.SSLHandshakeException;
 import java.io.IOException;
@@ -26,14 +23,14 @@ class WebPage {
     private String statusMessage;
     private Document parsedBody;
 
-    WebPage(String url, Integer timeout, Boolean ignoreHttpErrors, Boolean followRedirects) {
-        /** Creates a WebPage object
-         * @param url String url to pare
+    WebPage(String url, Integer timeout, Boolean followRedirects) {
+        /* Creates a WebPage object
+          @param url String url to pare
          */
         try {
             Response response = Jsoup.connect(url)
                     .timeout(timeout)
-                    .ignoreHttpErrors(ignoreHttpErrors)
+                    .ignoreHttpErrors(true)
                     .followRedirects(followRedirects)
                     .execute();
             statusCode = response.statusCode();
@@ -80,22 +77,13 @@ class WebPage {
 
     List<String> getRemoteScripts() {
         List<String> list = new ArrayList<>();
-
-        Elements scripts = this.parsedBody.select("script[src$=.js]");
-
-        for (Element src : scripts) {
-            if (src.tagName().equals("script")) {
-                list.add(src.attr("abs:src"));
-            }
-
-        }
+        this.parsedBody.select("script[src$=.js]").forEach(l -> list.add(l.attr("src")));
         return list;
     }
 
     List<String> getInlineScripts() {
         List<String> list = new ArrayList<>();
-        Elements scripts = this.parsedBody.getElementsByTag("script");
-        scripts.forEach(script -> list.add(script.data()));
+        this.parsedBody.getElementsByTag("script").forEach(script -> list.add(script.data()));
         return list;
     }
 
@@ -115,7 +103,6 @@ class WebPageBuilder {
 
     private String url;
     private int timeout = 30000;
-    private Boolean ignoreHttpErrors = false;
     private Boolean followRedirects = false;
 
 
@@ -129,17 +116,13 @@ class WebPageBuilder {
         return this;
     }
 
-    WebPageBuilder setValidateTLSCertificates(Boolean validateTLSCertificates) {
-        this.ignoreHttpErrors = ignoreHttpErrors;
-        return this;
-    }
 
-    WebPageBuilder setFollowRedirects(Boolean followRedirects) {
-        this.followRedirects = followRedirects;
+    WebPageBuilder setFollowRedirects() {
+        this.followRedirects = true;
         return this;
     }
 
     WebPage build() {
-        return new WebPage(url, timeout, ignoreHttpErrors, followRedirects);
+        return new WebPage(url, timeout, followRedirects);
     }
 }
