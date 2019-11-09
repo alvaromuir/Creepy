@@ -1,5 +1,7 @@
 package com.coke.analytics.komds;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -78,14 +80,15 @@ class Crawler {
 
         parseOneTrust(webPage, oneTrustScript, oneTrustScriptPlacement, oneTrustHostingPlatform, oneTrustSingleLocationScriptList);
 
-        List<String> gtmContainers = webPage.getInlineScripts().stream()
+        List<String> gtmContainerIds = getGtmId(webPage.getInlineScripts().stream()
                 .filter(l -> l.contains("gtm"))
-                .collect(Collectors.toList());
+                .collect(Collectors.toList()));
 
-        gtmID.append(getGtmId(gtmContainers));
+        gtmID.append(String.join(",", gtmContainerIds));
 
-
-        gtmIDPlacement.append(webPage.getInlineScriptsParentElement("gtm"));
+        gtmIDPlacement.append(gtmContainerIds.stream()
+                .map(webPage::getInlineScriptsParentElement)
+                .collect(Collectors.joining(",")));
     }
 
     /**
@@ -120,13 +123,13 @@ class Crawler {
      * @param inlineScriptsList List<String> of in-line GTM scripts
      * @return String GTM ID
      */
-    private static String getGtmId(List<String> inlineScriptsList) {
+    private static List<String> getGtmId(List<String> inlineScriptsList) {
         Pattern pattern = Pattern.compile("(GTM-)\\w+");
 
         return inlineScriptsList.stream()
                 .map(pattern::matcher)
                 .filter(Matcher::find)
                 .map(Matcher::group)
-                .collect(Collectors.joining(","));
+                .collect(Collectors.toList());
     }
 }
