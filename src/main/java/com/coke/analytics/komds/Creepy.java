@@ -7,7 +7,6 @@ import org.slf4j.LoggerFactory;
 
 import java.io.PrintWriter;
 import java.util.Arrays;
-import java.util.List;
 import java.util.concurrent.Semaphore;
 
 
@@ -55,7 +54,7 @@ public class Creepy {
      * Returns all selected from command line
      * @param option Option object
      * @param commandLine CommandLine object
-     * @return
+     * @return String options, blank string if null
      */
     private static String getOption(final char option, final CommandLine commandLine) {
         if (commandLine.hasOption(option)) {
@@ -101,13 +100,15 @@ public class Creepy {
                 }
 
                 if(cmd.hasOption('l')) {
-                    List<String> urls = Arrays.asList(list.split("\\s*,\\s*"));
-                    urls.forEach(l -> new CrawlerThread(semaphore, l, timeOut).start());
+                    Arrays.asList(list.split("\\s*,\\s*"))
+                        .forEach(l -> new CrawlerThread(semaphore, l, timeOut)
+                                .start());
                 }
 
                 if(cmd.hasOption('f')) {
-                    List<String> urls = Utils.readFileToList(file);
-                    urls.forEach(l -> new CrawlerThread(semaphore, l, timeOut).start());
+                    Utils.readFileToList(file)
+                        .forEach(l -> new CrawlerThread(semaphore, l, timeOut)
+                            .start());
                 }
             }
         } catch( ParseException e ) {
