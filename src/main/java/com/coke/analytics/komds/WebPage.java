@@ -23,14 +23,14 @@ class WebPage {
     private String statusMessage;
     private Document parsedBody;
 
-    WebPage(String url, Integer timeout, Boolean followRedirects) {
+    WebPage(String url, Integer timeout, Boolean ignoreHttpErrors, Boolean followRedirects) {
         /* Creates a WebPage object
           @param url String url to pare
          */
         try {
             Response response = Jsoup.connect(url)
                     .timeout(timeout)
-                    .ignoreHttpErrors(true)
+                    .ignoreHttpErrors(ignoreHttpErrors)
                     .followRedirects(followRedirects)
                     .execute();
             statusCode = response.statusCode();
@@ -40,13 +40,13 @@ class WebPage {
         } catch (UnknownHostException e) {
             this.statusCode = 105;
             this.statusMessage = "Name not resolved";
-        } catch (HttpStatusException e) {
-            this.statusCode = 404;
-            this.statusMessage = "Page not found";
         } catch(SSLHandshakeException e) {
             this.statusCode = 106;
             this.statusMessage = "SSL handshake error";
-        } catch (IOException | NullPointerException ignored) { }
+        } catch (HttpStatusException e) {
+            this.statusCode = 404;
+            this.statusMessage = "Page not found";
+        } catch (IOException | NullPointerException ignored) { } // being lazy
 
     }
 
@@ -103,6 +103,7 @@ class WebPageBuilder {
 
     private String url;
     private int timeout = 30000;
+    private Boolean ignoreHttpErrors = false;
     private Boolean followRedirects = false;
 
 
@@ -117,12 +118,17 @@ class WebPageBuilder {
     }
 
 
+    WebPageBuilder ignoreHttpErrors() {
+        this.ignoreHttpErrors = true;
+        return this;
+    }
+
     WebPageBuilder setFollowRedirects() {
         this.followRedirects = true;
         return this;
     }
 
     WebPage build() {
-        return new WebPage(url, timeout, followRedirects);
+        return new WebPage(url, timeout, ignoreHttpErrors, followRedirects);
     }
 }
