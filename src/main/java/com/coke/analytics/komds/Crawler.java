@@ -39,6 +39,13 @@ class Crawler {
             parseScripts(webPage, oneTrustScript, oneTrustScriptPlacement, oneTrustHostingPlatform, gtmID, gtmIDPlacement);
         }
 
+         if(statusCode.equals("106")) {
+             WebPage retryPage = new WebPageBuilder().setUrl(url).ignoreHttpErrors().build();
+
+             parseScripts(retryPage, oneTrustScript, oneTrustScriptPlacement, oneTrustHostingPlatform, gtmID, gtmIDPlacement);
+
+         }
+
         if(statusCode.startsWith("3")) {
             WebPage redirectPage = new WebPageBuilder().setUrl(url).setFollowRedirects().build();
 
