@@ -24,11 +24,18 @@ a file  of comma-separated urls with the `-f` or `--file` flag:
 ### Help  
 see help `-?` or `--help` and other options below   
   
-``` creepy parses a url for KO MDS Global required tags.  
-usage: creepy <parameters>  
-Parameters  
- -?,--help            prints help information -f,--file <arg>      file of urls (one per line) to scan -l,--list <arg>      list urls (comma separated) to scan -o,--timeout <arg>   timeout in seconds, default 3 -t,--limit <arg>     limit of threads to use, default 10 -u,--url <arg>       url to scanREADME - https://bitbucket.coke.com/projects/KOMDS/repos/creepy/browse  
-```  
+``` 
+creepy parses a url for KO MDS Global required tags.
+usage: creepy <parameters>
+Parameters
+ -?,--help            prints help information
+ -f,--file <arg>      file of urls (one per line) to scan
+ -l,--list <arg>      list urls (comma separated) to scan
+ -o,--timeout <arg>   timeout in seconds, default 3
+ -t,--limit <arg>     limit of threads to use, default 10
+ -u,--url <arg>       url to scan
+README - https://bitbucket.coke.com/projects/KOMDS/repos/creepy/browse
+```
 &nbsp;
 
 &nbsp;
