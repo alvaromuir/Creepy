@@ -52,7 +52,7 @@ class WebPage {
 
     /**
      * Returns the integer value of a HTTP response, 105 if server not found
-     * @return     Integer responseCode
+     * @return     Integer
      */
 
     Integer getStatusCode() {
@@ -61,7 +61,7 @@ class WebPage {
 
     /**
      * Returns the String value of a HTTP response, 'Name not resolved' if server not found
-     * @return     Integer responseCode
+     * @return     Integer
      */
     String getStatusMessage() {
         return this.statusMessage;
@@ -69,7 +69,7 @@ class WebPage {
 
     /**
      * Returns the Document value of a parsed webpage
-     * @return      Document responseParsedBody
+     * @return     Document
      */
     Document getParsedBody() {
         return this.parsedBody;
@@ -81,16 +81,30 @@ class WebPage {
         return list;
     }
 
+    /**
+     * Returns a list of inline scripts
+     * @return    List<String>
+     */
     List<String> getInlineScripts() {
         List<String> list = new ArrayList<>();
         this.parsedBody.getElementsByTag("script").forEach(script -> list.add(script.data()));
         return list;
     }
 
+    /**
+     * Returns a the name of the parent element of the user-defined remote script, if found
+     * @return   String
+     */
+
     String getRemoteScriptParentElement(String elementSrc) {
         Element element = this.parsedBody.select("script[src$="+elementSrc+"]").first();
         return element.parentNode().nodeName();
     }
+
+    /**
+     * Returns a the name of the parent element of the user-defined inlinw script, if found
+     * @return   String
+     */
 
     String getInlineScriptsParentElement(String elementFilter) {
         Element script = this.parsedBody.getElementsByTag("script").first();
@@ -118,7 +132,7 @@ class WebPageBuilder {
     }
 
 
-    WebPageBuilder ignoreHttpErrors() {
+    WebPageBuilder setIgnoreHttpErrors() {
         this.ignoreHttpErrors = true;
         return this;
     }

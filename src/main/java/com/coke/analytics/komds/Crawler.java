@@ -33,18 +33,18 @@ class Crawler {
 
         String statusCode = webPage.getStatusCode().toString();
 
-        output.append(String.format("%-65s | %s", url, statusCode));
+        output.append(String.format("%-35s | %-4s", url, statusCode));
 
         if(statusCode.equals("200")) {
             parseScripts(webPage, oneTrustScript, oneTrustScriptPlacement, oneTrustHostingPlatform, gtmID, gtmIDPlacement);
         }
 
-         if(statusCode.equals("106")) {
-             WebPage retryPage = new WebPageBuilder().setUrl(url).ignoreHttpErrors().build();
-
-             parseScripts(retryPage, oneTrustScript, oneTrustScriptPlacement, oneTrustHostingPlatform, gtmID, gtmIDPlacement);
-
-         }
+//         if(statusCode.equals("106")) {
+//
+//             WebPage retryPage = new WebPageBuilder().setUrl(url).setIgnoreHttpErrors().build();
+//             parseScripts(retryPage, oneTrustScript, oneTrustScriptPlacement, oneTrustHostingPlatform, gtmID, gtmIDPlacement);
+//
+//         }
 
         if(statusCode.startsWith("3")) {
             WebPage redirectPage = new WebPageBuilder().setUrl(url).setFollowRedirects().build();
@@ -53,11 +53,11 @@ class Crawler {
 
         }
 
-         output.append(oneTrustScript.toString().trim().equals("") ? String.format(" | %-89s", (Object) null): String.format(" | %-89s", oneTrustScript));
-         output.append(oneTrustScriptPlacement.toString().trim().equals("") ? String.format(" | %s", (Object) null): String.format(" | %s", oneTrustScriptPlacement));
-         output.append(oneTrustHostingPlatform.toString().trim().equals("") ? String.format(" | %-6s", (Object) null): String.format(" | %-6s", oneTrustHostingPlatform));
-         output.append(gtmID.toString().trim().equals("") ? String.format(" | %-23s", (Object) null): String.format(" | %-23s", gtmID));
-         output.append(gtmIDPlacement.toString().trim().equals("") ? String.format(" | %-5s ", (Object) null): String.format(" | %-5s", gtmIDPlacement));
+         output.append(oneTrustScript.toString().trim().equals("") ? String.format(" | %-85s", (Object) null): String.format(" | %-85s", oneTrustScript));
+         output.append(oneTrustScriptPlacement.toString().trim().equals("") ? String.format(" | %s-8", (Object) null): String.format(" | %-8s", oneTrustScriptPlacement));
+         output.append(oneTrustHostingPlatform.toString().trim().equals("") ? String.format(" | %-9s", (Object) null): String.format(" | %-9s", oneTrustHostingPlatform));
+         output.append(gtmID.toString().trim().equals("") ? String.format(" | %-11s", (Object) null): String.format(" | %-11s", gtmID));
+         output.append(gtmIDPlacement.toString().trim().equals("") ? String.format(" | %-9s ", (Object) null): String.format(" | %-9s", gtmIDPlacement));
 
         return output.toString();
 

@@ -29,6 +29,10 @@ class TaskRunner {
      */
     static void printCrawlResults(String url, int timeout) {
         String results = crawlUrl(url, timeout);
+        String header = results.isEmpty() ? "no results" :
+                String.format("%-35s | %-4s | %-85s | %-8s | %-9s | %-11s | %-9s", "domain", "HTTP", "OT script",
+                        "OT place", "OT source", "GTM-ID", "GTM place");
+        System.out.println(header);
         System.out.println(results);
     }
 }
