@@ -95,6 +95,10 @@ public class Creepy {
 
                 Semaphore semaphore = taskRunner.getSemaphore();
 
+                String header = String.format("%-50s | %-4s | %-85s | %-8s | %-9s | %-11s | %-9s", "domain", "HTTP", "OT script",
+                        "OT place", "OT source", "GTM-ID", "GTM place");
+                System.out.println(header);
+
                 if(cmd.hasOption('u')) {
                     TaskRunner.printCrawlResults(url, timeOut);
                 }

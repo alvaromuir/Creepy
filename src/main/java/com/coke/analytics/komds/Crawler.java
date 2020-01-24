@@ -33,7 +33,7 @@ class Crawler {
 
         String statusCode = webPage.getStatusCode().toString();
 
-        output.append(String.format("%-35s | %-4s", url, statusCode));
+        output.append(String.format("%-50s | %-4s", url, statusCode));
 
         if(statusCode.equals("200")) {
             parseScripts(webPage, oneTrustScript, oneTrustScriptPlacement, oneTrustHostingPlatform, gtmID, gtmIDPlacement);
@@ -54,7 +54,7 @@ class Crawler {
         }
 
          output.append(oneTrustScript.toString().trim().equals("") ? String.format(" | %-85s", (Object) null): String.format(" | %-85s", oneTrustScript));
-         output.append(oneTrustScriptPlacement.toString().trim().equals("") ? String.format(" | %s-8", (Object) null): String.format(" | %-8s", oneTrustScriptPlacement));
+         output.append(oneTrustScriptPlacement.toString().trim().equals("") ? String.format(" | %s-8s", (Object) null): String.format(" | %-8s", oneTrustScriptPlacement));
          output.append(oneTrustHostingPlatform.toString().trim().equals("") ? String.format(" | %-9s", (Object) null): String.format(" | %-9s", oneTrustHostingPlatform));
          output.append(gtmID.toString().trim().equals("") ? String.format(" | %-11s", (Object) null): String.format(" | %-11s", gtmID));
          output.append(gtmIDPlacement.toString().trim().equals("") ? String.format(" | %-9s ", (Object) null): String.format(" | %-9s", gtmIDPlacement));
