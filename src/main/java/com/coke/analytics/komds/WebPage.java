@@ -22,6 +22,7 @@ class WebPage {
     private Integer statusCode;
     private String statusMessage;
     private Document parsedBody;
+    private String location;
 
     WebPage(String url, Integer timeout, Boolean ignoreHttpErrors, Boolean followRedirects) {
         /* Creates a WebPage object
@@ -36,6 +37,7 @@ class WebPage {
             statusCode = response.statusCode();
             statusMessage = response.statusMessage();
             parsedBody =  response.parse();
+            location = response.header("location");
 
         } catch (UnknownHostException e) {
             this.statusCode = 105;
@@ -75,6 +77,19 @@ class WebPage {
         return this.parsedBody;
     }
 
+    /**
+     * Returns the response location a parsed webpage
+     * @return     String
+     */
+    String getLocation() {
+        return this.location;
+    }
+
+
+    /**
+     * Returns the remote scripts webpage
+     * @return     List
+     */
     List<String> getRemoteScripts() {
         List<String> list = new ArrayList<>();
         this.parsedBody.select("script[src$=.js]").forEach(l -> list.add(l.attr("src")));
@@ -102,7 +117,7 @@ class WebPage {
     }
 
     /**
-     * Returns a the name of the parent element of the user-defined inlinw script, if found
+     * Returns a the name of the parent element of the user-defined inline script, if found
      * @return   String
      */
 

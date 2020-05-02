@@ -10,12 +10,10 @@ import static com.coke.analytics.komds.Crawler.crawlUrl;
  * Nov 08, 2019
  */
 class TaskRunner {
-    private static int threadLimit;
     Semaphore semaphore;
 
 
     TaskRunner(int threadLimit) {
-        TaskRunner.threadLimit = threadLimit;
         this.semaphore = new Semaphore(threadLimit);
     }
 
@@ -35,9 +33,9 @@ class TaskRunner {
 }
 
 class CrawlerThread extends Thread {
-    private Semaphore semaphore;
-    private String url;
-    private int timeout;
+    private final Semaphore semaphore;
+    private final String url;
+    private final int timeout;
 
     CrawlerThread(Semaphore semaphore, String url, int timeout) {
         this.semaphore = semaphore;
