@@ -1,7 +1,7 @@
 # Creepy  
 v1.0  
   
-Creepy is a mult-threaded webpage scanner that searches for OneTrust and GTM tag installations.  
+Creepy is a multi-threaded webpage scanner that searches for OneTrust and GTM tag installations.  
   
 &nbsp;
 
